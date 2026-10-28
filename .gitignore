@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+public/og
+scripts/__pycache__
+tsconfig.tsbuildinfo
+deploy/
+_preview/
+source/raw/
+source/place/
