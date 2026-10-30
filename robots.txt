@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: http://172.237.20.244:8106/sitemap.xml
