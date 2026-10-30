@@ -29,7 +29,7 @@ export default function AreaIndex() {
       <div className="wrap content page-top">
         <p className="eyebrow dark">지역</p>
         <h1 className="page-title">대전 지역별 철거·원상복구 안내</h1>
-        <p className="prose-p">{BRAND}이 다니는 대전 지역 안내 페이지입니다. 지금 {OPEN_PAGES.length.toLocaleString()}개가 열려 있습니다.</p>
+        <p className="prose-p">{BRAND}가 다니는 대전 지역 안내 페이지입니다. 지금 {OPEN_PAGES.length.toLocaleString()}개가 열려 있습니다.</p>
         <section className="sec">
           <h2 className="area-h">장소</h2>
           <div className="cities">

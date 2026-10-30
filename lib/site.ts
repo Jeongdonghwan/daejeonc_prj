@@ -7,18 +7,18 @@ export const PLACE_URL = 'https://m.place.naver.com/place/1297541290';
 
 // ---- 플레이스에서 확인한 사실만 (없는 값은 빈 문자열로 두고 화면에 안 나오게) ----
 export const PLACE_FACTS = {
-  checked: '',
-  name: '',
-  category: '',
-  phone: '',
-  placePhone: '',
-  address: '',
-  hours: '',
-  area: '',
-  intro: '',
-  menu: [] as { name: string; price: string; d?: string }[],
+  checked: '2026-10-30',
+  name: '대전철거',
+  category: '건물·구축물 해체공사',
+  phone: '010-4076-1172', // 플레이스 소개글의 상담문의 번호
+  placePhone: '0507-1413-1624', // 플레이스 안심번호
+  address: '대전 서구 괴정로198번길 64',
+  hours: '', // 플레이스에 영업시간 없음
+  area: '플레이스에 방문접수·출장이 표시된 업체입니다',
+  intro: '대전철거는 건물철거·실내철거·인테리어철거·구조물철거·원상복구를 하는 업체입니다.\n필요할 때 연락 주시면 상담해 드립니다.',
+  menu: ['철거', '건물철거', '실내철거', '인테리어철거', '인테리어원상복구', '구조물철거'].map((name) => ({ name, price: '' })) as { name: string; price: string; d?: string }[],
   links: [] as { label: string; url: string }[],
-  reviews: { visitor: 0, blog: 0 },
+  reviews: { visitor: 75, blog: 624 },
 };
 
 export const BRAND = PLACE_FACTS.name || '대전 철거';

@@ -4,7 +4,7 @@ import { OPEN_PAGES, PLACES, PHOTOS, openPlaces, placePages, placePath, pagePath
 import { WORDS } from '../lib/words';
 import { BRAND, CONTACT, PLACE_FACTS, shareMeta } from '../lib/site';
 import { faqJsonLd, itemListJsonLd } from '../lib/jsonld';
-import { Actions, IconArrow, JsonLd, PhoneBlock, PlaceLink, SectionHead, Ticker } from '../components/Common';
+import { Actions, IconArrow, JsonLd, PhoneBlock, PlaceLink, SectionHead } from '../components/Common';
 
 const HOME_TITLE = `${BRAND} | 대전 철거·상가철거·원상복구`;
 const HOME_DESC = `${BRAND} — 대전 상가·식당·미용실·학원·공장·폐업 철거와 원상복구, 완파. 현장을 보고 범위를 정한 뒤 견적을 드립니다. 중구·서구·유성구 지역별 안내.`;
@@ -26,13 +26,13 @@ const FAQ = [
   { q: '견적은 어떻게 받나요?', a: `${CONTACT.phone}로 전화하시거나 네이버 플레이스로 문의해 주세요. 현장 주소와 사진이 있으면 상담이 빨라집니다.` },
 ];
 
+const FLOW = [['전화 상담', '현장 주소와 철거할 곳을 알려 주세요'], ['현장 확인', '뜯을 것과 남길 것을 정합니다'], ['범위별 견적', '현장을 본 뒤 안내합니다'], ['철거·정리', '원상복구까지 마무리합니다']];
+
 export default function Home() {
   const places = openPlaces();
   // 메인 캐러셀: 장소별 대표(수식어 없는) 페이지 (최대 30)
   const hubs = OPEN_PAGES.filter((p) => inSitemap(p) && p.mod === '').slice(0, 30);
-  const tickerNames = places.map((k) => PLACES[k].name);
   const wordLink = (w: Word) => OPEN_PAGES.find((p) => inSitemap(p) && p.word === w && p.place === '대전' && p.mod === '') || OPEN_PAGES.find((p) => p.word === w);
-  const heroImg = PHOTOS[0];
   const F = PLACE_FACTS;
 
   return (
@@ -45,22 +45,22 @@ export default function Home() {
             <h1><span><i>대전 철거·원상복구</i></span><span><i>{BRAND}</i></span></h1>
             <p className="hero-lead">상가 · 식당 · 미용실 · 학원 · 공장 · 폐업 철거, 원상복구, 완파. 뜯을 것과 남길 것을 현장에서 먼저 정하고 시작합니다.</p>
             <Actions />
-            <dl className="facts">
-              <div><dt>PHONE</dt><dd>{CONTACT.phone}</dd></div>
-              {F.reviews.visitor > 0 && <div><dt>방문자 리뷰</dt><dd><b data-count={F.reviews.visitor}>{F.reviews.visitor}</b></dd></div>}
-              {F.reviews.blog > 0 && <div><dt>블로그 리뷰</dt><dd><b data-count={F.reviews.blog}>{F.reviews.blog}</b></dd></div>}
-              <div><dt>지역 페이지</dt><dd><b data-count={places.length}>{places.length}</b></dd></div>
-            </dl>
           </div>
-          <figure className="hero-photo mask">
-            <img src={`/img/${heroImg.img}.webp`} alt={`${BRAND} 대전 철거 ${heroImg.scene}`} width={heroImg.w} height={heroImg.h} />
-            <figcaption><b>{BRAND}</b>{heroImg.scene}</figcaption>
-          </figure>
+          <div className="hero-strip">
+            {PHOTOS.slice(0, 3).map((k, i) => (
+              <figure key={k.img} style={{ animationDelay: `${i * 120}ms` }}>
+                <img src={`/img/${k.img}.webp`} alt={`${BRAND} 대전 철거 ${k.scene}`} width={k.w} height={k.h} />
+                <figcaption>{k.scene}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
       <div className="hazard" aria-hidden="true" />
 
-      <Ticker items={tickerNames} />
+      <ol className="flow-bar wrap">
+        {FLOW.map(([t, d], i) => <li key={t}><b>{String(i + 1).padStart(2, '0')}</b><span>{t}</span><small>{d}</small></li>)}
+      </ol>
 
       <div className="wrap content">
         <section className="sec">
@@ -83,18 +83,9 @@ export default function Home() {
         </section>
       </div>
 
-      {F.menu.length > 0 && (
-        <section className="band">
-          <div className="wrap">
-            <SectionHead no="02" title="플레이스에 올린 서비스" sub="네이버 플레이스 메뉴(서비스) 항목 그대로입니다. 실제 비용은 현장 확인 뒤 정해집니다." />
-            <ol className="tools reveal-group">{F.menu.map((m) => <li key={m.name}><div><h3>{m.name}{m.price ? ` · ${m.price}` : ''}</h3>{m.d && <p>{m.d}</p>}</div></li>)}</ol>
-          </div>
-        </section>
-      )}
-
       <div className="wrap content">
         <section className="sec">
-          <SectionHead no="03" title={`${BRAND} 현장 사진`} sub="네이버 플레이스에 업체가 올린 사진입니다. 방문자 리뷰 사진은 쓰지 않았습니다." />
+          <SectionHead no="02" title={`${BRAND} 현장 사진`} sub="네이버 플레이스에 업체가 올린 사진입니다. 방문자 리뷰 사진은 쓰지 않았습니다." />
           <div className="rail-nav">
             <button type="button" data-scroll="-1" data-target="case-rail" aria-label="이전 사진">←</button>
             <button type="button" data-scroll="1" data-target="case-rail" aria-label="다음 사진">→</button>
@@ -121,7 +112,7 @@ export default function Home() {
       <div className="wrap content">
         {F.intro && (
           <section className="sec mist">
-            <SectionHead no="04" title="업체 소개" sub="네이버 플레이스 소개 글입니다." />
+            <SectionHead no="03" title="업체 소개" sub="네이버 플레이스 소개 글입니다." />
             <div className="cols">
               <div className="prose" data-reveal>{F.intro.split('\n').filter(Boolean).map((t, i) => <p key={i} className={i === 0 ? 'first' : ''}>{t}</p>)}</div>
               <dl className="info" data-reveal>
@@ -137,7 +128,7 @@ export default function Home() {
         )}
 
         <section className="sec">
-          <SectionHead no="05" title="대전 지역 안내" sub="지역을 고르면 그 동네 건물·상권 사정과 철거 종류별 안내로 이어집니다." />
+          <SectionHead no="04" title="대전 지역 안내" sub="지역을 고르면 그 동네 건물·상권 사정과 철거 종류별 안내로 이어집니다." />
           <div className="cities">
             {places.map((k) => (
               <Link key={k} href={placePath(k)} className="city-row" data-reveal>
@@ -153,7 +144,7 @@ export default function Home() {
         </section>
 
         <section className="sec mist">
-          <SectionHead no="06" title="자주 묻는 질문" />
+          <SectionHead no="05" title="자주 묻는 질문" />
           <div className="faq">{FAQ.map((f) => <details key={f.q} data-reveal><summary>{f.q}<i /></summary><p>{f.a}</p></details>)}</div>
         </section>
       </div>

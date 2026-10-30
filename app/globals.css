@@ -51,8 +51,6 @@ button { font: inherit; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; transition: height .3s var(--ease); }
 .scrolled .header-inner { height: 56px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.logo-mark { width: 30px; height: 30px; background: var(--navy); position: relative; flex: none; }
-.logo-mark::after { content: ''; position: absolute; left: 9px; top: 6px; width: 12px; height: 16px; background: var(--accent); clip-path: polygon(50% 0, 100% 62%, 82% 92%, 50% 100%, 18% 92%, 0 62%); }
 .logo b { font-weight: 800; font-size: 1.08rem; letter-spacing: -0.03em; }
 .logo small { display: block; font-size: .72rem; color: var(--muted); letter-spacing: 0; line-height: 1.2; }
 .nav { display: flex; align-items: center; gap: 22px; font-size: .93rem; font-weight: 600; }
@@ -450,5 +448,36 @@ body { padding-bottom: 50px; }
 .logo-word { display: flex; flex-direction: column; line-height: 1.1; }
 .logo-word b { font-size: 1.12rem; font-weight: 800; letter-spacing: -0.03em; }
 .logo-word small { font-family: var(--mono); font-size: .68rem; color: var(--muted); }
-.logo-mark { width: 30px; height: 30px; background: repeating-linear-gradient(-45deg, var(--accent) 0 6px, var(--deep) 6px 12px); flex: none; }
-.logo-mark::after { display: none; }
+
+/* 메인 히어로 — 밝은 바탕 + 큰 검은 제목, 사진은 아래 가로 띠 (퍼펙트철거 전면 사진·선호환경 좌우 분할과 다르게) */
+.hero-home { background: var(--mist); color: var(--ink); }
+.hero-home .hero-grid { grid-template-columns: 1fr; min-height: 0; }
+.hero-home .hero-text { padding: 72px 0 44px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); column-gap: 56px; align-items: end; }
+.hero-home .eyebrow { grid-column: 1 / -1; justify-self: start; color: var(--accent); }
+.hero-home h1 { grid-column: 1; grid-row: 2 / 4; margin: 0; font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.055em; word-break: keep-all; }
+@media (min-width: 861px) { .hero-home h1 span { white-space: nowrap; } }
+.hero-home h1 span + span i { color: var(--accent); }
+.hero-home .hero-lead { grid-column: 2; color: var(--muted); margin: 0 0 22px; }
+.hero-home .actions { grid-column: 2; }
+.hero-home .place-link, .hero-home .btn-text { color: var(--ink); }
+.hero-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-bottom: 56px; }
+.hero-strip figure { margin: 0; position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--mist-2); animation: fade 1s var(--ease) both; }
+.hero-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-strip figcaption { position: absolute; left: 0; bottom: 0; background: var(--navy); color: #fff; font-size: .78rem; font-weight: 600; padding: 8px 12px; max-width: 100%; }
+@media (max-width: 860px) {
+  .hero-home .hero-text { grid-template-columns: 1fr; padding: 44px 0 28px; }
+  .hero-home h1, .hero-home .hero-lead, .hero-home .actions { grid-column: 1; grid-row: auto; }
+  .hero-home h1 { margin-bottom: 18px; }
+  .hero-strip { gap: 8px; padding-bottom: 32px; } .hero-strip figure:nth-child(2) { transform: none; } .hero-strip figcaption { display: none; }
+}
+@media (max-width: 560px) { .hero-strip { grid-template-columns: 1.4fr 1fr; } .hero-strip figure:nth-child(1) { grid-row: span 2; aspect-ratio: auto; } .hero-strip figure:nth-child(n+2) { aspect-ratio: 1; } }
+
+/* 메인: 진행 순서 4칸 (지역 이름 띠 대신) */
+.flow-bar { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0; margin-bottom: 0; padding-top: 0; background: var(--navy); color: #fff; }
+.flow-bar li { padding: 26px 24px; border-right: 1px solid var(--line-dark); display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: baseline; }
+.flow-bar li:last-child { border-right: 0; }
+.flow-bar b { font-family: var(--mono); color: var(--accent); font-size: 1.1rem; grid-row: span 2; }
+.flow-bar span { font-weight: 800; font-size: 1.08rem; }
+.flow-bar small { color: rgba(255,255,255,.66); font-size: .86rem; }
+@media (max-width: 860px) { .flow-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .flow-bar li:nth-child(2) { border-right: 0; } .flow-bar li:nth-child(-n+2) { border-bottom: 1px solid var(--line-dark); } }
+@media (max-width: 560px) { .flow-bar li { padding: 18px 14px; } }

@@ -93,7 +93,7 @@ export function compose(p: Page): Composed {
   ], s, 'lead');
 
   // ---- 답 먼저 ----
-  const answer = `${kw}: ${end(w.aim)} ${nm}에서는 ${w.laws[0].t}${w.laws[1] ? `·${w.laws[1].t}` : ''}부터 확인하고, ${BRAND}은 현장을 본 뒤 범위별 견적을 드립니다.`;
+  const answer = `${kw}: ${end(w.aim)} ${nm}에서는 ${w.laws[0].t}${w.laws[1] ? `·${w.laws[1].t}` : ''}부터 확인하고, ${BRAND}는 현장을 본 뒤 범위별 견적을 드립니다.`;
   const summary: [string, string][] = [
     ['현장', `${P.admin}`],
     ['범위', `${w.scope.slice(0, 3).map((x) => x.name).join(' · ')} 등`],
@@ -115,7 +115,7 @@ export function compose(p: Page): Composed {
       `${w.short} 관점에서 보면 ${end(P[w.facet === 'house' ? 'house' : w.facet === 'factory' ? 'factory' : 'shop'])} ${w.facet === 'office' ? end(P.office) : w.facet === 'edu' ? end(P.edu) : w.facet === 'food' ? end(P.food) : ''}`.trim(),
       pick([
         `${nearby.length ? `${j(nm, '과')} 가까운 ${nearby.slice(0, 3).join('·')} 쪽 ${w.short} 현장도 같은 방식으로 봅니다. ` : ''}${spots[0]} 주변처럼 차량 대기가 어려운 곳은 반출 시간을 따로 정합니다.`,
-        `${F.address ? `${BRAND}은 ${F.address}에 있어 ` : ''}${nm} 현장 확인 일정을 통화로 바로 잡습니다. ${spots.slice(0, 2).join('·')} 주변 건물도 같은 기준으로 봅니다.`,
+        `${F.address ? `${BRAND}는 ${F.address}에 있어 ` : ''}${nm} 현장 확인 일정을 통화로 바로 잡습니다. ${spots.slice(0, 2).join('·')} 주변 건물도 같은 기준으로 봅니다.`,
       ], s, 'rp3'),
     ],
     spots,
@@ -161,7 +161,7 @@ export function compose(p: Page): Composed {
   const capTail = [`${nm} 현장도 같은 순서로 작업합니다.`, `${lb} 상담 때 이 사진처럼 과정을 보여 드립니다.`, `${nm} ${w.obj}에서도 거치는 단계입니다.`];
   const photos = {
     heading: pick([`${BRAND} 현장 사진`, `사진으로 보는 ${w.short} 작업`, `${BRAND} 작업 기록`], s, 'ph'),
-    sub: `${BRAND}이 네이버 플레이스에 올린 업체 사진입니다. 방문자 리뷰 사진은 쓰지 않았습니다.`,
+    sub: `${BRAND}가 네이버 플레이스에 올린 업체 사진입니다. 방문자 리뷰 사진은 쓰지 않았습니다.`,
     items: picked.map((c, i) => ({ p: c, alt: `${kw} - ${BRAND} ${c.scene}`, caption: `${c.scene}. ${capTail[(seedOf(s) + i) % capTail.length]}` })),
   };
   const heroP = rotate(photosFor(p, 4), s, 'hero')[0];

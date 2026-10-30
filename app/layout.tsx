@@ -6,6 +6,7 @@ import { businessJsonLd, webSiteJsonLd } from '../lib/jsonld';
 import { SITE_URL, SITE_NAME } from '../lib/site';
 
 export const metadata: Metadata = {
+  icons: { icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/icon.png', type: 'image/png', sizes: '192x192' }], apple: '/apple-touch-icon.png' },
   metadataBase: new URL(SITE_URL),
   title: { default: SITE_NAME, template: `%s` },
   robots: { index: true, follow: true },
