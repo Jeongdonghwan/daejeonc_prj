@@ -3,7 +3,7 @@
 #   bash scripts/deploy.sh <단계 1~2> <https://도메인>   (단계 = 키워드 우선순위)
 # 서버 갱신: cd /var/www/<폴더> && git fetch -q origin deploy && git reset -q --hard origin/deploy
 set -euo pipefail
-WAVE=${1:?단계(1~3)}; URL=${2:?https://도메인}
+WAVE=${1:?단계(1~4)}; URL=${2:?https://도메인}
 cd "$(dirname "$0")/.."
 python -I scripts/make_og.py  # og 이미지(public/og, git 제외) 없는 것만 생성
 rm -rf out
