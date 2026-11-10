@@ -104,7 +104,7 @@ export function compose(p: Page): Composed {
   // ---- 도입 ----
   const intro = [fill(pick(w.first, s, 'first'), nm), pick([
     `${P.kind === '시구' ? '' : `${P.gu} `}${j(nm, '은')} ${end(P.note)} ${kw} 현장도 이 건물 사정에 맞춰 범위를 잡습니다.`,
-    `${j(nm, '은')} ${P.homes}이 함께 있는 곳입니다. ${kw} 문의도 건물 종류에 따라 볼 곳이 달라, 첫 통화에서 건물과 층수를 먼저 여쭙니다.`,
+    `${j(nm, '은')} ${j(P.homes, '이')} 함께 있는 곳입니다. ${kw} 문의도 건물 종류에 따라 볼 곳이 달라, 첫 통화에서 건물과 층수를 먼저 여쭙니다.`,
   ], s, 'intro2')];
 
   // ---- 지역 ----
@@ -142,7 +142,7 @@ export function compose(p: Page): Composed {
       `${lb} 상담 때 아래 가운데 어떤 작업이 필요한지 현장을 보고 설명드립니다.`,
       `${nm} 현장은 한 가지 작업으로 끝나지 않을 때가 많아, 필요한 작업을 묶어 견적을 드립니다.`,
     ], s, 'sc'),
-    list: rotate(w.scope, s, 'scope'),
+    list: rotate(w.scope, s, 'scope').slice(0, 4), // 6개 중 4개 — 같은 단어 페이지끼리 겹침 줄이기
   };
 
   // ---- 제도 ----
@@ -158,11 +158,12 @@ export function compose(p: Page): Composed {
 
   // ---- 사진 ----
   const picked = photosFor(p, 3);
-  const capTail = [`${nm} 현장도 같은 순서로 작업합니다.`, `${lb} 상담 때 이 사진처럼 과정을 보여 드립니다.`, `${nm} ${w.obj}에서도 거치는 단계입니다.`];
+  // 캡션에는 장면 설명을 넣지 않는다(alt 에만) — 사진이 3장뿐이라 전 페이지 공통 문장이 됨
+  const capTail = [`${nm} 현장도 이 사진과 같은 순서로 작업합니다.`, `${lb} 상담 때 이런 작업 사진을 보여 드립니다.`, `${nm} ${w.obj}에서도 거치는 정리 단계입니다.`];
   const photos = {
     heading: pick([`${BRAND} 현장 사진`, `사진으로 보는 ${w.short} 작업`, `${BRAND} 작업 기록`], s, 'ph'),
     sub: `${BRAND}가 네이버 플레이스에 올린 업체 사진입니다. 방문자 리뷰 사진은 쓰지 않았습니다.`,
-    items: picked.map((c, i) => ({ p: c, alt: `${kw} - ${BRAND} ${c.scene}`, caption: `${c.scene}. ${capTail[(seedOf(s) + i) % capTail.length]}` })),
+    items: picked.map((c, i) => ({ p: c, alt: `${kw} - ${BRAND} ${c.scene}`, caption: capTail[(seedOf(s) + i) % capTail.length] })),
   };
   const heroP = rotate(photosFor(p, 4), s, 'hero')[0];
   const hero = { img: heroP.img, alt: `${kw} - ${BRAND} ${heroP.scene}`, cap: heroP.scene };
@@ -170,17 +171,17 @@ export function compose(p: Page): Composed {
   // ---- 진행 순서 ----
   const tails = [
     [`${nm} 주소와 함께 말씀해 주세요.`, `${lb} 현장 사진이 있으면 더 정확합니다.`],
-    [`${nm} ${w.obj} 구조에 맞춰 정합니다.`, '정한 내용은 견적서에 적습니다.'],
-    [`${lb} 현장 상태를 사진으로 남깁니다.`, '추가 작업이 생기면 먼저 상의합니다.'],
-    [`${nm} 현장 조건에 맞춰 진행합니다.`, '안내한 범위대로 진행합니다.'],
+    [`${nm} ${w.obj} 구조에 맞춰 정합니다.`, `${lb} 견적서에 범위별로 적어 드립니다.`],
+    [`${lb} 현장 상태를 사진으로 남깁니다.`, `${nm} 현장에서 범위 밖 작업이 보이면 먼저 여쭙니다.`],
+    [`${nm} 현장 조건에 맞춰 진행합니다.`, `${kw} 견적 범위대로 진행합니다.`],
     [`${nm} 현장 마무리를 확인합니다.`, `${lb} 작업 내역을 정리해 드립니다.`],
   ];
   const steps = w.steps.map((st, i) => ({ title: st.title, text: `${st.text} ${pick(tails[i], s, `st${i}`)}` }));
 
   // ---- 상담 전 정리 ----
   const tell = {
-    heading: pick([`${nm}에서 연락 주실 때 알려 주시면 좋은 것`, `${lb} ${w.short} 상담 전 정리할 다섯 가지`], s, 'tell'),
-    items: w.tell,
+    heading: pick([`${nm}에서 연락 주실 때 알려 주시면 좋은 것`, `${lb} ${w.short} 상담 전 정리할 네 가지`], s, 'tell'),
+    items: rotate(w.tell, s, 'tell').slice(0, 4),
     text: `위 내용과 ${nm} 현장 주소, 사진을 함께 알려 주시면 ${kw} 현장 확인 때 필요한 것을 미리 챙겨 갈 수 있습니다.`,
   };
 
@@ -196,9 +197,9 @@ export function compose(p: Page): Composed {
 
   // ---- FAQ ----
   const common = [
-    { q: `${nm}까지 현장 확인을 오나요?`, a: `${F.area ? `${end(F.area)} ` : ''}${nm} 현장 확인 일정은 통화로 정합니다. 현장을 보고 범위별 견적을 드립니다.` },
-    { q: `${w.short} 견적은 어떻게 받나요?`, a: `${CONTACT.phone}로 전화하시거나 네이버 플레이스로 문의해 주세요. ${nm} 현장 주소와 사진이 있으면 상담이 빨라집니다.` },
-    { q: `${lb} ${w.short} 작업 기간은 얼마나 걸리나요?`, a: `면적, 철거 범위, 반출 동선, 건물 작업 시간 제한에 따라 다릅니다. ${nm} 현장을 본 뒤 일정을 함께 안내합니다.` },
+    { q: `${nm}까지 현장 확인을 오나요?`, a: `${F.area ? `${end(F.area)} ` : ''}${nm} ${w.obj} 현장 확인 날짜는 통화로 잡습니다.` },
+    { q: `${w.short} 견적은 어떻게 받나요?`, a: pick([`${nm} 현장 주소와 사진을 준비해 ${CONTACT.phone}로 연락 주시면 ${w.short} 범위부터 여쭙니다.`, `${CONTACT.phone} 전화나 네이버 플레이스 문의로 받습니다. ${lb} ${w.obj} 사진이 있으면 상담이 짧아집니다.`], s, 'fq2') },
+    { q: `${lb} ${w.short} 작업 기간은 얼마나 걸리나요?`, a: `${nm} ${w.obj}의 면적과 범위, 건물 작업 시간 제한에 따라 다릅니다. ${kw} 일정은 현장 확인 뒤 정합니다.` },
   ];
   const faqTail = [`${nm} 현장도 같은 기준으로 봅니다.`, `${kw} 상담 때 함께 설명드립니다.`, `${lb} 현장이라면 현장 확인 때 정합니다.`];
   const own = w.faq.map((f, i) => ({ q: i === 0 ? `${lb} ${f.q}` : f.q, a: `${f.a} ${faqTail[(seedOf(s) + i) % faqTail.length]}` }));

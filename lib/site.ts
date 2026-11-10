@@ -28,6 +28,7 @@ export const CONTACT = { phone: PLACE_FACTS.phone, hours: PLACE_FACTS.hours };
 
 // 순차 오픈: 이 단계 이하의 페이지만 빌드·사이트맵·내부링크에 포함된다. 단계 = 키워드 엑셀 우선순위
 //   OPEN_WAVE=1~4 (data/drip.json 일정: 오픈일 25% → 2일 50% → 4일 75% → 6일 100%)
+//   5·6 = 오픈 뒤 추가한 지역 키워드 801개 (drip.json extra: 11-12 · 11-14)
 export const OPEN_WAVE = Number(process.env.OPEN_WAVE || 4);
 
 // 표기만 다른 키워드(대전/대전시/대전광역시, 유성/유성구/대전 유성구/대전 유성, 둔산/둔산동, 도안/도안신도시)는 대표 페이지로 canonical + 사이트맵 제외
