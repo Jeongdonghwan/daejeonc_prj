@@ -8,3 +8,4 @@ deploy/
 _preview/
 source/raw/
 source/place/
+.lastmod.json

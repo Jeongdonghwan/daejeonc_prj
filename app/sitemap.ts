@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/area/`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     ...openPlaces().map((k) => ({ url: `${SITE_URL}${placeEncodedPath(k)}`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 })),
     ...OPEN_PAGES.filter(inSitemap).map((p) => ({
       url: `${SITE_URL}${pageEncodedPath(p)}`,

@@ -1,7 +1,7 @@
 // 공통 UI — 이모지 없이 선 아이콘, 각진 버튼, 번호 붙은 섹션 머리.
 // 사용자 요청: 네이버 플레이스 링크를 헤더·히어로·푸터·하단 고정바에 고정 → PlaceLink.
 import Link from 'next/link';
-import { BRAND, CONTACT, PLACE_FACTS, PLACE_URL, tel } from '../lib/site';
+import { BRAND, CONTACT, PLACE_FACTS, PLACE_URL, UPDATED, tel } from '../lib/site';
 
 export const JsonLd = ({ data }: { data: object | object[] }) => (
   <>{(Array.isArray(data) ? data : [data]).map((d, i) => <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(d) }} />)}</>
@@ -69,7 +69,7 @@ export const Footer = () => (
       <div>
         <strong className="foot-brand">{BRAND}</strong>
         <p>철거 · 상가철거 · 식당철거 · 원상복구 · 완파 · 미용실·학원·공장·폐업 철거<br />대전 중구 · 서구 · 유성구 · 둔산 · 도안 · 노은 외</p>
-        <p><Link href="/area/">지역 안내</Link> · <a href="/rss.xml">RSS</a> · <PlaceLink label="네이버 플레이스" /></p>
+        <p><Link href="/about/">소개</Link> · <Link href="/area/">지역 안내</Link> · <a href="/rss.xml">RSS</a> · <PlaceLink label="네이버 플레이스" /></p>
       </div>
       <ul className="foot-info">
         <li><span>상호</span>{BRAND}</li>
@@ -79,7 +79,7 @@ export const Footer = () => (
         <li><span>전화</span><a href={tel}>{CONTACT.phone}</a></li>
       </ul>
     </div>
-    <div className="wrap foot-bottom">© {new Date().getFullYear()} {BRAND} · 업체 정보·사진 출처: 네이버 플레이스{PLACE_FACTS.checked ? ` (${PLACE_FACTS.checked} 확인)` : ''}</div>
+    <div className="wrap foot-bottom">© {new Date().getFullYear()} {BRAND} · 업체 정보·사진 출처: 네이버 플레이스{PLACE_FACTS.checked ? ` (${PLACE_FACTS.checked} 확인)` : ''} · 최종 수정 <time dateTime={UPDATED}>{UPDATED}</time></div>
   </footer>
 );
 

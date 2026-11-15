@@ -32,6 +32,7 @@ export const CONTACT = { phone: PLACE_FACTS.phone, hours: PLACE_FACTS.hours };
 export const OPEN_WAVE = Number(process.env.OPEN_WAVE || 4);
 
 // 표기만 다른 키워드(대전/대전시/대전광역시, 유성/유성구/대전 유성구/대전 유성, 둔산/둔산동, 도안/도안신도시)는 대표 페이지로 canonical + 사이트맵 제외
+export const UPDATED = '2026-11-16'; // content revision date - bump when page text changes
 export const MERGE_VARIANTS = true;
 
 export const tel = `tel:${CONTACT.phone.replace(/[^0-9]/g, '')}`;
