@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME, BRAND, CONTACT, PLACE_FACTS, PLACE_URL } from './site';
+import { SITE_URL, UPDATED, SITE_NAME, BRAND, CONTACT, PLACE_FACTS, PLACE_URL } from './site';
 
 // 업체 — 플레이스에서 확인한 값만 넣는다(주소가 없으면 address 생략)
 export const businessJsonLd = () => ({
@@ -46,7 +46,7 @@ export const serviceJsonLd = (o: { name: string; type: string; description: stri
   url: `${SITE_URL}${o.path}`,
   image: `${SITE_URL}${o.image}`,
   areaServed: { '@type': 'Place', name: o.area },
-  provider: { '@id': `${SITE_URL}/#business` },
+  provider: { '@id': `${SITE_URL}/#business` }, dateModified: UPDATED,
 });
 
 // 관련 페이지·허브 목록(캐러셀). path 는 인코딩된 경로
