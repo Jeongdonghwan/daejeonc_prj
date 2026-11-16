@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: SITE_NAME, template: `%s` },
   robots: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
-  verification: { other: { 'naver-site-verification': '420933d948a93ce53ebc81e7a3086910d88d26e0' } }, // TODO: 서치콘솔(google) 코드 받으면 추가
+  verification: { google: 'DcMqPBbpRm_AYTKYCbvhSG5I7xSmtmmTpaBW5osvabI', other: { 'naver-site-verification': '420933d948a93ce53ebc81e7a3086910d88d26e0' } },
 };
 
 export const viewport: Viewport = { themeColor: '#1a1d20', width: 'device-width', initialScale: 1 };
