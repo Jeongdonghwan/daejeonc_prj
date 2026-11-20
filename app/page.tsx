@@ -7,7 +7,7 @@ import { faqJsonLd, itemListJsonLd } from '../lib/jsonld';
 import { Actions, IconArrow, JsonLd, PhoneBlock, PlaceLink, SectionHead } from '../components/Common';
 
 const HOME_TITLE = `${BRAND} | 대전 철거·상가철거·원상복구`;
-const HOME_DESC = `${BRAND} — 대전 상가·식당·미용실·학원·공장·폐업 철거와 원상복구, 완파. 현장을 보고 범위를 정한 뒤 견적을 드립니다. 중구·서구·유성구 지역별 안내.`;
+const HOME_DESC = `${BRAND} — 대전 상가·식당·공장·폐업 철거와 원상복구. 현장을 보고 범위를 정한 뒤 견적, 중구·서구·유성구 안내.`;
 export const metadata: Metadata = {
   title: HOME_TITLE,
   description: HOME_DESC,
