@@ -57,14 +57,14 @@ export const rotate = <T,>(arr: T[], seed: string, salt = ''): T[] => {
 };
 
 // 관련 페이지 — 열린 대표 페이지만. 같은 장소 다른 단어 / 같은 단어 이웃 장소 / 같은 장소·단어 다른 수식어
-export function related(p: Page) {
+export function related(p: Page, n = 8) {
   const pool = OPEN_PAGES.filter((x) => x.slug !== p.slug && inSitemap(x));
   const P = PLACES[p.place];
-  const samePlace = rotate(pool.filter((x) => x.place === p.place && x.word !== p.word && x.mod === ''), p.slug, 'sp').slice(0, 8);
+  const samePlace = rotate(pool.filter((x) => x.place === p.place && x.word !== p.word && x.mod === ''), p.slug, 'sp').slice(0, n);
   const sameWord = rotate(pool.filter((x) => x.word === p.word && x.place !== p.place && x.mod === p.mod && P.near.includes(x.place)), p.slug, 'sw')
     .concat(rotate(pool.filter((x) => x.word === p.word && x.place !== p.place && x.mod === p.mod && !P.near.includes(x.place)), p.slug, 'sw2'))
-    .slice(0, 8);
-  const sameMod = pool.filter((x) => x.place === p.place && x.word === p.word);
+    .slice(0, n);
+  const sameMod = pool.filter((x) => x.place === p.place && x.word === p.word).slice(0, n > 5 ? 8 : 3);
   return { samePlace, sameWord, sameMod };
 }
 

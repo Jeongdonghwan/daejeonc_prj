@@ -481,3 +481,17 @@ body { padding-bottom: 50px; }
 .flow-bar small { color: rgba(255,255,255,.66); font-size: .86rem; }
 @media (max-width: 860px) { .flow-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); } .flow-bar li:nth-child(2) { border-right: 0; } .flow-bar li:nth-child(-n+2) { border-bottom: 1px solid var(--line-dark); } }
 @media (max-width: 560px) { .flow-bar li { padding: 18px 14px; } }
+/* ---------- 키워드 페이지: h1 수식어 · 레이 구조 (2026-11-24) ---------- */
+.hero h1 > span:first-child { animation: fade 1s var(--ease) both; }
+.hero h1 .hero-sub { font-weight: 600; font-size: .46em; line-height: 1.35; letter-spacing: -0.02em; margin-top: 14px; color: rgba(255,255,255,.72); animation: fade 1s .12s var(--ease) both; }
+.answer h2 { margin: 0 0 10px; font-size: .95rem; font-weight: 800; color: var(--navy-2); letter-spacing: -0.01em; }
+.answer > p { font-weight: 600; font-size: 1.06rem; line-height: 1.75; }
+.ray { max-width: 760px; padding: 40px 0 8px; }
+.ray section { padding: 34px 0 8px; border-top: 1px solid var(--line); }
+.ray section:first-child { border-top: 0; }
+.ray h2 { display: flex; align-items: baseline; gap: 14px; margin: 0 0 14px; font-size: clamp(1.2rem, 2.4vw, 1.5rem); line-height: 1.4; letter-spacing: -0.03em; font-weight: 800; }
+.ray h2 span { flex: none; font-size: .78rem; font-weight: 700; color: var(--navy-2); font-variant-numeric: tabular-nums; border-bottom: 2px solid var(--accent); }
+.ray p { margin: 0 0 16px; font-size: 1.05rem; line-height: 1.9; color: #2a3343; }
+.ray-shots { grid-template-rows: 280px; margin-top: 32px; }
+.ray-shots figure:first-child { grid-row: auto; }
+.ray-h { margin: 0 0 24px; font-size: clamp(1.35rem, 3vw, 1.9rem); line-height: 1.3; letter-spacing: -0.035em; font-weight: 800; }
