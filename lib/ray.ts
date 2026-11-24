@@ -21,6 +21,17 @@ const para = (sents: string[], max = 268) => {
 const josaOf = (w: string, t: string) => j(w, t).slice(w.length);
 const MOD_CAT: Record<string, string> = { '': '범위·일정', 업체: '견적 비교', 잘하는곳: '작업 과정', 전문: '설비·절차', 추천: '맡기기 전 확인' };
 
+// h1 수식어: "키워드 수식어"가 40자를 넘지 않는 벌을 해시 순서로 고르고, 다 넘으면 구 단위로 자른다 (title 앞부분 = h1)
+const fitSub = (kw: string, arr: string[], seed: string) => {
+  const k = hi(`${seed}::h1sub`) % arr.length;
+  const order = [...arr.slice(k), ...arr.slice(0, k)];
+  const ok = order.find((x) => kw.length + 1 + x.length <= 40);
+  if (ok) return ok;
+  const words = order[0].split(' ');
+  while (words.length > 1 && kw.length + 1 + words.join(' ').length > 40) words.pop();
+  return words.join(' ').replace(/[,·]$/, '');
+};
+
 export function composeRay(p: Page) {
   const c = compose(p);
   const P = PLACES[p.place];
@@ -34,13 +45,13 @@ export function composeRay(p: Page) {
   const last = w.scope[w.scope.length - 1].name;
   const mi = c.mod.items;
 
-  const h1sub = pick({
+  const h1sub = fitSub(kw, {
     '': [`${sp[0]} 주변 ${w.obj} 범위·일정 정리`, `${w.scope[0].name}부터 ${last}까지`, `${w.laws[0].t}까지 한 번에 확인`],
     업체: [`견적서에서 볼 ${mi.length}가지`, `${sp[0]} 주변 ${w.obj} 견적 비교`, `${w.scope[0].name} 범위부터 비교`],
     잘하는곳: [`${w.scope[1].name} 순서와 마감 보기`, `${sp[0]} 주변 현장 과정 비교`, `보양부터 청소까지 과정 보기`],
     전문: [`${w.laws[0].t}·${w.laws[1].t} 알고 맡기기`, `${w.obj} 설비와 절차`, `${sp[0]} 주변 ${w.obj} 현장 기준`],
     추천: [`맡기기 전 직접 확인할 ${mi.length}가지`, `${sp[0]} 주변 현장 견적 확인`, `${w.tell[0]}부터 묻는 견적`],
-  }[p.mod] || [`${sp[0]} 주변 ${w.obj} 범위·일정 정리`], s, 'h1sub');
+  }[p.mod] || [`${sp[0]} 주변 ${w.obj} 범위·일정 정리`], s);
 
   const cat = `${P.admin.split(' ').slice(0, 2).join(' ')} · ${w.short} · ${MOD_CAT[p.mod] ?? '범위·일정'}`;
 
@@ -116,5 +127,5 @@ export function composeRay(p: Page) {
     `${kw} — ${t[0]}부터 범위대로. 현장 견적 ${CONTACT.phone}`,
   ].find((x) => x.length <= 80)!;
 
-  return { ...c, h1sub, cat, summaryText: summary, facts, sections, faq, description };
+  return { ...c, title: `${kw} ${h1sub} | ${BRAND}`, h1sub, cat, summaryText: summary, facts, sections, faq, description };
 }

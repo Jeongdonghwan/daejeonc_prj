@@ -55,3 +55,7 @@ const dl = pages.map((p) => get(p).c.description.length); const dset = new Set(p
 const kwH2 = pages.map((p) => 3 + get(p).c.sections.filter((x) => x.h.includes(p.kw)).length);
 console.log(`description 길이 ${Math.min(...dl)}~${Math.max(...dl)}자 · 45~80 밖 ${dl.filter((x) => x < 45 || x > 80).length} · 중복 ${pages.length - dset.size} · 키워드 든 h2 최소 ${Math.min(...kwH2)}개`);
 console.log('예 description:', get(pages[0]).c.description, '/', get(pages[700]).c.description);
+// title = "{키워드} {h1 수식어} | 상호": 중복 0, 앞부분 == h1 글자, 전체 60자 이하·앞부분 40자 이하
+const tl = pages.map((p) => get(p).c.title); const head = pages.map((p) => `${p.kw} ${get(p).c.h1sub}`);
+console.log(`title 중복 ${tl.length - new Set(tl).size} · 길이 ${Math.min(...tl.map((x) => x.length))}~${Math.max(...tl.map((x) => x.length))}자 · 60자 초과 ${tl.filter((x) => x.length > 60).length} · 앞부분 40자 초과 ${head.filter((x) => x.length > 40).length} · h1 불일치 ${tl.filter((x, i) => x !== `${head[i]} | ${BRAND}`).length}`);
+console.log('예 title:', tl[0], '/', tl[Math.floor(tl.length / 2)]);
