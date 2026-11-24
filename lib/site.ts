@@ -21,7 +21,7 @@ export const PLACE_FACTS = {
   reviews: { visitor: 75, blog: 624 },
 };
 
-export const BRAND = PLACE_FACTS.name || '대전 철거';
+export const BRAND = '새미래철거'; // 사용자 확인 2026-11-24 (플레이스 등록명은 PLACE_FACTS.name)
 export const SITE_NAME = `${BRAND} | 대전 철거·원상복구`;
 
 export const CONTACT = { phone: PLACE_FACTS.phone, hours: PLACE_FACTS.hours };
