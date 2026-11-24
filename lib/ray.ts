@@ -32,6 +32,9 @@ const fitSub = (kw: string, arr: string[], seed: string) => {
   return words.join(' ').replace(/[,·]$/, '');
 };
 
+// title 전체 40자 이하(네이버 권장): 상호를 붙여 40자를 넘으면 상호를 뺀다. 앞부분은 항상 h1 과 같다
+const titleOf = (kw: string, sub: string) => (`${kw} ${sub} | ${BRAND}`.length <= 40 ? `${kw} ${sub} | ${BRAND}` : `${kw} ${sub}`);
+
 export function composeRay(p: Page) {
   const c = compose(p);
   const P = PLACES[p.place];
@@ -127,5 +130,5 @@ export function composeRay(p: Page) {
     `${kw} — ${t[0]}부터 범위대로. 현장 견적 ${CONTACT.phone}`,
   ].find((x) => x.length <= 80)!;
 
-  return { ...c, title: `${kw} ${h1sub} | ${BRAND}`, h1sub, cat, summaryText: summary, facts, sections, faq, description };
+  return { ...c, title: titleOf(kw, h1sub), h1sub, cat, summaryText: summary, facts, sections, faq, description };
 }
